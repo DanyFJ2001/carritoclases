@@ -27,6 +27,11 @@ export const ModalProduct = ({ isvisible, setshowModal, Produc,changestockproduc
   //funcion agregar producto al carrito
   const handleaddproduct=()=>{
     changestockproduct(Produc.id,quantity);
+
+
+    //inicializar la cantidad 
+
+    setquantity(1);
     //cerrar el modal
     setshowModal();
 
@@ -88,6 +93,7 @@ export const ModalProduct = ({ isvisible, setshowModal, Produc,changestockproduc
                 </View>
 
                 <TouchableOpacity
+                onPress={handleaddproduct}
                   style={styles.buttonaddcart}>
 
                   <Text style={styles.texbutton}>Agregar carrito</Text>

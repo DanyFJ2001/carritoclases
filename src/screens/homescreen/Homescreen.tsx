@@ -3,6 +3,10 @@ import { FlatList, Text, View } from 'react-native'
 import { TitleComponent } from '../../components/TitleComponent';
 import { BodyComponent } from '../../components/BodyComponent';
 import { CardProductos } from './component/CardProductos';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SECUNDARY_COLOR } from '../../commons/constants';
+import { styles } from '../../theme/appTheme';
+import { Modalcar } from './component/Modalcar';
 
 
 
@@ -13,6 +17,13 @@ export interface Prod {
     price: number;
     stock: number;
     pathimage: string;
+}
+//interface -arreglo de compras
+export interface Car {
+    id: number,
+    name: string,
+    price: number;
+    totalquantity: number;
 }
 
 export const Homescreen = () => {
@@ -34,6 +45,15 @@ export const Homescreen = () => {
     ];
     const [productsstate, setproducts] = useState(products);
 
+
+
+    //hook use state :manipular el estado del arreglo del carrito de compras 
+    const [car, setcar] = useState<Car[]>([]);
+    //hook usestate: manipular la visualizavion del modal 
+    const [showmodal, setshowmodal] = useState<boolean>(false)
+
+
+
     //crear una fucnion para actualizar el stock del producto
     const changestockproduct = (idproduct: number, quantity: number) => {
         //generar un arreglo con las actualizacviones del stock
@@ -44,20 +64,48 @@ export const Homescreen = () => {
             : product
         );
         setproducts(updatestock)
-
+        addproduct(idproduct, quantity);
 
 
     }
+    //funcion para agrefar los productos al carrito
+    const addproduct = (idproduct: number, quantity: number) => {
+        const product = productsstate.find(products => product.id === idproduct);
+        //controlar si el producto no ha sido encontrado 
+        if (!product) {
+            return;
+        }
+        const newproductcar: Car = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            totalquantity: quantity
 
+        }
+        //agrrega en el carrito del carrito 
+        setcar([...car, newproductcar]);
+        console.log(car);
+        //llamar la funcion agregar al carrito
+   
 
+    }
 
 
     return (
 
 
-
         <View>
-            <TitleComponent title='productos' />
+            <View style={styles.contentheaderhome}>
+                <TitleComponent title='Productos' />
+                <View style={styles.inconcardhome}>
+                    <Text style={styles.texIconcard}>{car.length}</Text>
+                    <Icon 
+                    name='shopping-bag' 
+                    size={33} 
+                    color={SECUNDARY_COLOR} 
+                    onPress={()=>setshowmodal(!showmodal)}/>
+                </View>
+            </View>
             <BodyComponent>
                 <FlatList
                     data={productsstate}
@@ -65,6 +113,7 @@ export const Homescreen = () => {
                     keyExtractor={item => item.id.toString()}
                 />
             </BodyComponent>
+            <Modalcar isvisible={showmodal} car={car} setshowmodal={()=>setshowmodal(!showmodal)}/>
         </View>
 
 

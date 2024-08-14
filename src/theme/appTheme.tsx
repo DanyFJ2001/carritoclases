@@ -186,6 +186,34 @@ export const styles = StyleSheet.create({
         fontWeight:"bold",
         color:'#a92424',
         textAlign:"center"
+    },
+    contentheaderhome:{
+        flexDirection:"row",
+        alignItems:"center"
+    },
+    inconcardhome:{
+        flex:1,
+        alignItems:"flex-end",
+        paddingHorizontal:33
+
+    },
+    texIconcard:{backgroundColor:SECUNDARY_COLOR,
+        borderRadius:20,
+        paddingHorizontal:5,
+        fontSize:13,
+        fontWeight:"bold"
+
+    },
+    headertable:{
+        flexDirection:"row",
+    justifyContent:"space-between"
+    },
+    headerinformation:{
+        flexDirection:"row",
+      
+    },
+    texinformation:{
+        marginHorizontal:10
     }
     
 });
